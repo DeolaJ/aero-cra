@@ -61,18 +61,6 @@ const BusBooking = () => {
             Book a seat
           </span>
         </BookingTabButton>
-        {/* <BookingTabButton
-          type="default"
-          onClick={() => (setTab('hire-bus'))}
-          active={tab === 'hire-bus'}
-        >
-          <span className="mobile">
-            Hire
-          </span>
-          <span className="hide-on-mobile">
-            Hire a bus
-          </span>
-        </BookingTabButton> */}
         <BookingTabButton
           type="default"
           onClick={() => (setTab('check-status'))}

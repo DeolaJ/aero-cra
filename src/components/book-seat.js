@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Dropdown from '../partials/dropdown';
 import DatePickerOption from '../partials/date-picker';
 import HorList from '../partials/horizontal-list';
 import { ButtonText, Button } from './button';
 import THEME from '../constants';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const BookingSeatWrapper = styled.div`
   width: 100%;
@@ -58,8 +60,10 @@ const BookingSeatForm = styled.div`
 
 const Booking = () => {
   const [trip, setTrip] = useState('one-way');
-  const [arrivalTerminal, setArrivalTerminal] = useState('chocolate');
-  const [departureTerminal, setDepartureTerminal] = useState('chocolate');
+  const [arrivalTerminal, setArrivalTerminal] = useState(null);
+  const [departureTerminal, setDepartureTerminal] = useState(null);
+  const [terminals, setTerminals] = useState([]);
+  // const [destination, setDestination] = useState([]);
   const [seatCount, setSeatCount] = useState(1);
   const [arrivalDate, setArrivalDate] = useState(new Date());
   const [departureDate, setDepartureDate] = useState(new Date());
@@ -68,6 +72,31 @@ const Booking = () => {
     // if user, route to the booking page
     // if not user, Route to the Booking page and load the signup modal
   };
+
+  // const getTrip = async (placeId) => {
+  //   const response = await fetch(`${BASE_URL}trip/${placeId}`);
+  //   let trips = await response.json();
+  //   trips = trips.data.map((tripData) => ({
+  //     ...tripData,
+  //     label: tripData.destination.name,
+  //     value: tripData.destination.id,
+  //   }));
+  //   setDestination(trips);
+  // };
+
+  useEffect(() => {
+    async function getPlaces() {
+      const response = await fetch(`${BASE_URL}place`);
+      let places = await response.json();
+      places = places.data.map((place) => ({
+        label: place.name,
+        value: place.id,
+      }));
+      setTerminals(places);
+      setDepartureTerminal(places[0].value);
+    }
+    getPlaces();
+  }, []);
 
   return (
     <BookingSeatWrapper>
@@ -95,11 +124,7 @@ const Booking = () => {
             </label>
             <Dropdown
               setValue={setDepartureTerminal}
-              options={[
-                { value: 'chocolate', label: 'Chocolate' },
-                { value: 'strawberry', label: 'Strawberry' },
-                { value: 'vanilla', label: 'Vanilla' },
-              ]}
+              options={terminals}
               value={departureTerminal}
               placeholder="Select departure terminal"
             />

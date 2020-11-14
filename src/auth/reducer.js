@@ -4,7 +4,7 @@ const user = localStorage.getItem('user')
   : '';
 
 const token = localStorage.getItem('user')
-  ? JSON.parse(localStorage.getItem('user')).token
+  ? JSON.parse(localStorage.getItem('user')).accessToken
   : '';
 
 export const defaultState = {

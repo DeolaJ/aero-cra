@@ -32,6 +32,11 @@ const DatePickerOption = ({
     }
   });
 
+  function getValidDate(current) {
+    const date = new Date();
+    return current.isAfter(date.setDate(date.getDate() - 1));
+  }
+
   useEffect(() => {
     if (!isEmpty(dateValue)) {
       updateFieldControl.current(dateValue, value);
@@ -50,6 +55,7 @@ const DatePickerOption = ({
         onChange={setDateValue}
         value={dateValue}
         timeFormat={false}
+        isValidDate={(current) => getValidDate(current)}
         closeOnSelect
       />
     </DatePickerWrapper>
