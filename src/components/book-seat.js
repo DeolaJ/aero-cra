@@ -63,7 +63,7 @@ const Booking = () => {
   const [arrivalTerminal, setArrivalTerminal] = useState(null);
   const [departureTerminal, setDepartureTerminal] = useState(null);
   const [terminals, setTerminals] = useState([]);
-  // const [destination, setDestination] = useState([]);
+  const [destination, setDestination] = useState([]);
   const [seatCount, setSeatCount] = useState(1);
   const [arrivalDate, setArrivalDate] = useState(new Date());
   const [departureDate, setDepartureDate] = useState(new Date());
@@ -73,16 +73,20 @@ const Booking = () => {
     // if not user, Route to the Booking page and load the signup modal
   };
 
-  // const getTrip = async (placeId) => {
-  //   const response = await fetch(`${BASE_URL}trip/${placeId}`);
-  //   let trips = await response.json();
-  //   trips = trips.data.map((tripData) => ({
-  //     ...tripData,
-  //     label: tripData.destination.name,
-  //     value: tripData.destination.id,
-  //   }));
-  //   setDestination(trips);
-  // };
+  useEffect(() => {
+    if (!departureTerminal) return;
+    const getTrip = async (placeId) => {
+      const response = await fetch(`${BASE_URL}trip/${placeId}`);
+      let trips = await response.json();
+      trips = trips.data.map((tripData) => ({
+        ...tripData,
+        label: tripData.destination.name,
+        value: tripData.destination.id,
+      }));
+      setDestination(trips);
+    };
+    getTrip(departureTerminal);
+  }, [departureTerminal]);
 
   useEffect(() => {
     async function getPlaces() {
@@ -135,11 +139,7 @@ const Booking = () => {
             </label>
             <Dropdown
               setValue={setArrivalTerminal}
-              options={[
-                { value: 'chocolate', label: 'Chocolate' },
-                { value: 'strawberry', label: 'Strawberry' },
-                { value: 'vanilla', label: 'Vanilla' },
-              ]}
+              options={destination}
               value={arrivalTerminal}
               placeholder="Select arrival terminal"
             />
