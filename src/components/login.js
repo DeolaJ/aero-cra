@@ -65,8 +65,8 @@ const LoginSchema = Yup.object().shape({
 const LoginForm = ({ setMode }) => {
   const history = useHistory();
   const initialValues = {
-    email: '',
-    password: '',
+    email: 'ben@ben.ben',
+    password: 'passed',
   };
   const dispatch = useAuthDispatch();
   const { loading, errorMessage } = useAuthState();
@@ -77,21 +77,20 @@ const LoginForm = ({ setMode }) => {
       validationSchema={LoginSchema}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(async () => {
-          // console.log(JSON.stringify(values, null, 2));
           const data = {
             ...values,
           };
           const response = await loginUser(dispatch, data);
+          setSubmitting(false);
           if (!response.user) return;
           history.replace('/dashboard');
-          setSubmitting(false);
         }, 1000);
       }}
     >
       {({
-        isSubmitting, errors, values, handleChange, submitForm,
+        isSubmitting, errors, values, handleChange, handleSubmit,
       }) => (
-        <Form>
+        <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
           <h2>
             Welcome back!
           </h2>
@@ -131,7 +130,6 @@ const LoginForm = ({ setMode }) => {
           <ButtonContainer>
             <Button
               disabled={isSubmitting && loading}
-              onClick={submitForm}
               className="login-button"
               type="primary"
               text={isSubmitting ? 'Logging in...' : 'Login'}

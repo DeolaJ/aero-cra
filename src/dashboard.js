@@ -6,7 +6,7 @@ import AdminContent from './components/layout/admin-content';
 import Body from './components/layout/body';
 
 const Dashboard = () => {
-  const { user } = useAuthState;
+  const { user } = useAuthState().user;
   // if (!user && typeof window !== 'undefined') {
   //   Router.replace('/');
   //   return null;
@@ -20,8 +20,7 @@ const Dashboard = () => {
 
       <Body>
         {
-          // user && (user.role === 'admin') ? (
-          !user ? (
+          user && (user.role === 'Admin') ? (
             <AdminContent
               user={user}
             />

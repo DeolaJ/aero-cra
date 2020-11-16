@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
-const BASE_URL = process.env.APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const signUpUser = async (dispatch, data) => {
   dispatch({
@@ -45,7 +45,7 @@ export const loginUser = async (dispatch, data) => {
     type: 'REQUEST_LOGIN',
   });
   return fetch(
-    `${BASE_URL}/login`,
+    `${BASE_URL}auth/token`,
     {
       method: 'POST',
       headers: {
@@ -56,13 +56,13 @@ export const loginUser = async (dispatch, data) => {
   )
     .then((response) => response.json())
     .then((response) => {
-      if (response.user) {
-        localStorage.setItem('user', JSON.stringify(response));
+      if (response.data && response.data.user) {
+        localStorage.setItem('user', JSON.stringify(response.data));
         dispatch({
           type: 'LOGIN_SUCCESS',
-          payload: response,
+          payload: response.data,
         });
-        return response;
+        return response.data;
       }
       return dispatch({
         type: 'LOGIN_ERROR',
