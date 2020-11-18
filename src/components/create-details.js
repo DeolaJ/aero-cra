@@ -72,7 +72,6 @@ const CreateModalDetails = ({ details, message, action }) => {
   };
 
   setInitialValues();
-  console.log('Initial values list ', initialValuesList, initialValues);
 
   const CreateSchema = () => {
     const initValues = {};
