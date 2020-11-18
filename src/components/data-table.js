@@ -65,6 +65,13 @@ const EditButton = styled(ButtonText)`
   background-color: #def7ec;
 `;
 
+const CreateButton = styled(ButtonText)`
+  font-size: .875rem;
+  padding: .6rem 4rem;
+  color: #03543f;
+  background-color: #b8e0f7;
+`;
+
 const DeleteButton = styled(ButtonText)`
   font-size: .875rem;
   padding: .6rem 1.2rem;
@@ -73,15 +80,30 @@ const DeleteButton = styled(ButtonText)`
 `;
 
 const DataTable = ({
-  tableContent, admin, openModal,
+  data, admin, openModal, fieldsShown, editFields, createFields,
+  deleteModalMessage, editModalMessage, createModalMessage,
+  deleteAction, createAction,
 }) => {
-  const headers = Object.keys(tableContent[0]);
+  const tableContent = data.map((item) => {
+    const newContent = {};
+    for (let i = 0; i < fieldsShown.length; i += 1) {
+      newContent[fieldsShown[i]] = item[fieldsShown[i]];
+    }
+
+    return newContent;
+  });
+
+  const modalCreateFields = Object.fromEntries(createFields.map((field) => [field, '']));
+  const modalEditFields = (row) => Object.fromEntries(
+    editFields.map((field) => [field, row[field]]),
+  );
+  const headers = tableContent[0] && Object.keys(tableContent[0]);
   return (
     <TableWrapper>
       <thead>
         <TableHeadRowWrapper className="first-row last-row">
           {
-            (headers.length > 0) && headers.map((header, index) => (
+            headers && (headers.length > 0) && headers.map((header, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <React.Fragment key={`${header}-${index}`}>
                 <TableHeadCell
@@ -91,7 +113,7 @@ const DataTable = ({
                       : ((index === headers.length - 1) ? 'last-item' : null)
                   }
                 >
-                  {headers[index]}
+                  {headers[index].toUpperCase()}
                 </TableHeadCell>
               </React.Fragment>
             ))
@@ -99,7 +121,20 @@ const DataTable = ({
           {
             admin && (
               <TableHeadCell>
-                Admin Controls
+                <CreateButton
+                  type="secondary"
+                  onClick={() => (
+                    openModal({
+                      type: 'create',
+                      open: true,
+                      details: modalCreateFields,
+                      message: createModalMessage,
+                      action: createAction,
+                    })
+                  )}
+                >
+                  Add
+                </CreateButton>
               </TableHeadCell>
             )
           }
@@ -107,18 +142,18 @@ const DataTable = ({
       </thead>
       <tbody>
         {
-          tableContent.length > 0 && tableContent.map((row) => (
-            <React.Fragment key={row}>
-              <TableBodyRowWrapper className={(row === 0) ? 'first-row' : ((row === tableContent.length - 1) ? 'last-row' : null)}>
+          tableContent.length > 0 && tableContent.map((row, index) => (
+            <React.Fragment key={row.id}>
+              <TableBodyRowWrapper className={(index === 0) ? 'first-row' : ((index === tableContent.length - 1) ? 'last-row' : null)}>
                 {
                   headers.length > 0 && headers.map((column, columnIndex) => (
                     <React.Fragment key={column}>
-                      <TableBodyCell className={(column === 0) ? 'first-item' : ((column === headers.length - 1) ? 'last-item' : null)}>
+                      <TableBodyCell className={(columnIndex === 0) ? 'first-item' : ((columnIndex === headers.length - 1) ? 'last-item' : null)}>
                         {row[column]}
                       </TableBodyCell>
                       {
                         (columnIndex === headers.length - 1) && (
-                          <TableBodyCell className={(column === 0) ? 'first-item' : ((column === headers.length - 1) ? 'last-item' : null)}>
+                          <TableBodyCell className={(columnIndex === 0) ? 'first-item' : ((columnIndex === headers.length - 1) ? 'last-item' : null)}>
                             <HorList spacing={10} leftStart>
                               <EditButton
                                 type="secondary"
@@ -126,7 +161,8 @@ const DataTable = ({
                                   openModal({
                                     type: 'edit',
                                     open: true,
-                                    details: row,
+                                    details: modalEditFields(row),
+                                    message: editModalMessage,
                                   })
                                 )}
                               >
@@ -139,6 +175,8 @@ const DataTable = ({
                                     type: 'delete',
                                     open: true,
                                     details: row,
+                                    message: deleteModalMessage,
+                                    action: deleteAction,
                                   })
                                 )}
                               >
@@ -161,12 +199,23 @@ const DataTable = ({
 };
 DataTable.defaultProps = {
   admin: false,
+  fieldsShown: [],
+  editFields: [],
+  createFields: [],
 };
 
 DataTable.propTypes = {
-  tableContent: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   admin: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
+  fieldsShown: PropTypes.arrayOf(PropTypes.string),
+  createFields: PropTypes.arrayOf(PropTypes.string),
+  editFields: PropTypes.arrayOf(PropTypes.string),
+  createModalMessage: PropTypes.string.isRequired,
+  editModalMessage: PropTypes.string.isRequired,
+  deleteModalMessage: PropTypes.string.isRequired,
+  deleteAction: PropTypes.func.isRequired,
+  createAction: PropTypes.func.isRequired,
 };
 
 export default DataTable;

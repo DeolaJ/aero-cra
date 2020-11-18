@@ -55,7 +55,7 @@ const Form = styled.form`
   }
 `;
 
-const EditTripDetails = ({ details }) => {
+const CreateModalDetails = ({ details, message, action }) => {
   let initialValues;
   let initialValuesList;
 
@@ -72,8 +72,9 @@ const EditTripDetails = ({ details }) => {
   };
 
   setInitialValues();
+  console.log('Initial values list ', initialValuesList, initialValues);
 
-  const EditSchema = () => {
+  const CreateSchema = () => {
     const initValues = {};
     const detailsList = Object.keys(details);
 
@@ -89,25 +90,19 @@ const EditTripDetails = ({ details }) => {
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={EditSchema()}
+      validationSchema={CreateSchema()}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(async () => {
-          // console.log(JSON.stringify(values, null, 2));
-          // const data = {
-          //   ...values,
-          // };
-          // Do something with the new data
+          action(values);
           setSubmitting(false);
         }, 1000);
       }}
     >
       {({
-        isSubmitting, errors, values, handleChange, submitForm,
+        isSubmitting, errors, values, handleChange, handleSubmit,
       }) => (
-        <Form>
-          <h2>
-            Update Trip Details
-          </h2>
+        <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+          <h2>{message}</h2>
           {
             initialValuesList && initialValuesList.map((detail) => (
               <InputFieldContainer key={detail}>
@@ -128,10 +123,10 @@ const EditTripDetails = ({ details }) => {
           <ButtonContainer>
             <Button
               disabled={isSubmitting}
-              onClick={submitForm}
+              // onClick={submitForm}
               className="update-button"
               type="secondary"
-              text={isSubmitting ? 'Updating...' : 'Update'}
+              text={isSubmitting ? 'Adding...' : 'Create'}
             />
           </ButtonContainer>
         </Form>
@@ -140,8 +135,10 @@ const EditTripDetails = ({ details }) => {
   );
 };
 
-EditTripDetails.propTypes = {
+CreateModalDetails.propTypes = {
   details: PropTypes.objectOf(PropTypes.string).isRequired,
+  message: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
 
-export default EditTripDetails;
+export default CreateModalDetails;

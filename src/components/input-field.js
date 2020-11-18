@@ -44,10 +44,10 @@ const InputWrapper = styled.div`
   }
 `;
 
-const InputOption = ({
+const InputField = ({
   setValue, value, placeholder, label, error, errorColor,
 }) => {
-  const [inputValue, setinputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(value);
 
   const updateFieldControl = useRef(debounce((newValue, currentValue) => {
     if (!isEqual(currentValue, newValue)) {
@@ -68,8 +68,8 @@ const InputOption = ({
           type="text"
           value={inputValue}
           placeholder={placeholder}
-          onChange={(e) => setinputValue(e.target.value)}
-          onBlur={(e) => setinputValue(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value)}
+          onBlur={(e) => setInputValue(e.target.value)}
         />
       </InputWrapper>
       {
@@ -83,12 +83,12 @@ const InputOption = ({
   );
 };
 
-InputOption.defaultProps = {
+InputField.defaultProps = {
   placeholder: '',
   error: '',
 };
 
-InputOption.propTypes = {
+InputField.propTypes = {
   value: PropTypes.oneOfType(
     [PropTypes.string, PropTypes.number, PropTypes.bool],
   ).isRequired,
@@ -99,4 +99,4 @@ InputOption.propTypes = {
   errorColor: PropTypes.string.isRequired,
 };
 
-export default InputOption;
+export default InputField;
