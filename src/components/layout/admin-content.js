@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import DataTable from '../data-table';
@@ -7,9 +7,11 @@ import Section from '../section';
 import THEME from '../../constants';
 import EditModal from '../../partials/edit-modal';
 import DeleteModal from '../../partials/delete-modal';
+import CreateModal from '../../partials/create-modal';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const AdminContentWrapper = styled.div`
-
   > section {
     padding-top: 8rem;
     padding-bottom: 10rem;
@@ -22,277 +24,31 @@ const AdminTitle = styled.h2`
   color: white;
 `;
 
-const AdminContent = (
-// {
-//   user,
-// }
-) => {
-  const content = [
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-    {
-      value: 'chocolate',
-      trip: 'chocolate',
-      departureDate: 'chocolate',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Chocolate',
-    },
-    {
-      value: 'strawberry',
-      trip: 'strawberry',
-      departureDate: 'strawberry',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Strawberry',
-    },
-    {
-      value: 'vanilla',
-      trip: 'vanilla',
-      departureDate: 'vanilla',
-      totalAmount: 'N10,000',
-      tripType: 'Flight',
-      label: 'Vanilla',
-    },
-  ];
+const AdminContent = (/* { userToken } */) => {
+  const [places, setPlaces] = useState([]);
+  const placesFieldsShown = ['id', 'name'];
+  const placesCreateFields = ['name'];
+  const placesEditFields = ['name'];
+  const deletePlaceModalMessage = 'Are you sure you want to delete this place?';
+  const editPlaceModalMessage = 'Update Place Details';
+  const createPlaceModalMessage = 'Add a new place';
+  const placeDeleteAction = (id) => async () => {
+    const response = await fetch(`${BASE_URL}plce/${id}`, { method: 'DELETE' });
+    await response.json();
+  };
+  const placeCreateAction = () => async () => {
+    const response = await fetch(`${BASE_URL}place`, { method: 'POST' });
+    await response.json();
+  };
+
+  useEffect(() => {
+    async function getPlaces() {
+      const response = await fetch(`${BASE_URL}place`);
+      const placesDb = await response.json();
+      setPlaces(placesDb.data);
+    }
+    getPlaces();
+  }, []);
 
   const [modalControl, setModalControl] = useState({
     type: '',
@@ -314,23 +70,44 @@ const AdminContent = (
           Hello user
         </AdminTitle>
         <DataTable
-          tableContent={content}
+          data={places}
           admin
           openModal={setModalControl}
+          fieldsShown={placesFieldsShown}
+          editFields={placesEditFields}
+          createFields={placesCreateFields}
+          deleteModalMessage={deletePlaceModalMessage}
+          editModalMessage={editPlaceModalMessage}
+          createModalMessage={createPlaceModalMessage}
+          deleteAction={placeDeleteAction}
+          createAction={placeCreateAction}
         />
         {
           (modalControl.type === 'edit') && modalControl.open && (
             <EditModal
-              tripDetails={modalControl.details}
+              details={modalControl.details}
               closeModal={closeModal}
+              message={modalControl.message}
             />
           )
         }
         {
           (modalControl.type === 'delete') && modalControl.open && (
             <DeleteModal
-              tripDetails={modalControl.details}
+              details={modalControl.details}
               closeModal={closeModal}
+              message={modalControl.message}
+              action={modalControl.action}
+            />
+          )
+        }
+        {
+          (modalControl.type === 'create') && modalControl.open && (
+            <CreateModal
+              details={modalControl.details}
+              closeModal={closeModal}
+              message={modalControl.message}
+              action={modalControl.action}
             />
           )
         }
@@ -340,7 +117,7 @@ const AdminContent = (
 };
 
 AdminContent.propTypes = {
-  // user: PropTypes.object,
+  // userToken: PropTypes.string.isRequired,
 };
 
 export default AdminContent;

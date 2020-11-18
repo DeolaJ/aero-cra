@@ -91,9 +91,7 @@ const LoginForm = ({ setMode }) => {
         isSubmitting, errors, values, handleChange, handleSubmit,
       }) => (
         <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-          <h2>
-            Welcome back!
-          </h2>
+          <h2>Welcome back!</h2>
           {
             errorMessage ? (
               <p styles={{ color: THEME.colors.error.main }}>

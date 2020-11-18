@@ -1,24 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ModalWrapper from '../components/modal-wrapper';
-import DeleteTripDetails from '../components/delete-trip-details';
+import DeleteModalDetails from '../components/delete-details';
 
 const DeleteModal = ({
-  tripDetails, closeModal,
+  details, closeModal, message, action,
 }) => (
   <ModalWrapper
     closeModal={closeModal}
   >
-    <DeleteTripDetails
-      details={tripDetails}
+    <DeleteModalDetails
+      details={details}
       closeModal={closeModal}
+      message={message}
+      action={action}
     />
   </ModalWrapper>
 );
 
 DeleteModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  tripDetails: PropTypes.objectOf(PropTypes.string).isRequired,
+  details: PropTypes.objectOf(PropTypes.string).isRequired,
+  message: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
 
 export default DeleteModal;
