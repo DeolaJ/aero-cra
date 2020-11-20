@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import 'react-datetime/css/react-datetime.css';
+import Notifications from './components/notifications';
 import { AuthProvider } from './auth';
 
 const HomepageLoadable = lazy(() => import('./home'));
@@ -12,6 +12,7 @@ const DashboardLoadable = lazy(() => import('./dashboard'));
 const App = () => (
   <>
     <AuthProvider>
+      <Notifications />
       <Router basename="/">
         <Switch>
           <Suspense fallback={<div />}>
