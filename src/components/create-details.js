@@ -91,10 +91,8 @@ const CreateModalDetails = ({ details, message, action }) => {
       initialValues={initialValues}
       validationSchema={CreateSchema()}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(async () => {
-          action(values);
-          setSubmitting(false);
-        }, 1000);
+        action(values);
+        setSubmitting(false);
       }}
     >
       {({
@@ -109,7 +107,7 @@ const CreateModalDetails = ({ details, message, action }) => {
                   label={detail}
                   id={detail}
                   name={detail}
-                  type={typeof detail === 'number' ? 'number' : 'text'}
+                  type={'text'}
                   value={values[detail]}
                   setValue={handleChange}
                   error={errors[detail]}
@@ -122,7 +120,6 @@ const CreateModalDetails = ({ details, message, action }) => {
           <ButtonContainer>
             <Button
               disabled={isSubmitting}
-              // onClick={submitForm}
               className="update-button"
               type="secondary"
               text={isSubmitting ? 'Adding...' : 'Create'}

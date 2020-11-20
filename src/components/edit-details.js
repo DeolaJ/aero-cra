@@ -55,7 +55,7 @@ const Form = styled.form`
   }
 `;
 
-const EditModalDetails = ({ details, message }) => {
+const EditModalDetails = ({ details, message, action }) => {
   let initialValues;
   let initialValuesList;
 
@@ -87,20 +87,14 @@ const EditModalDetails = ({ details, message }) => {
       initialValues={initialValues}
       validationSchema={EditSchema()}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(async () => {
-          // console.log(JSON.stringify(values, null, 2));
-          // const data = {
-          //   ...values,
-          // };
-          // Do something with the new data
-          setSubmitting(false);
-        }, 1000);
+        action(values.id, { ...values, id: undefined });
+        setSubmitting(false);
       }}
     >
       {({
-        isSubmitting, errors, values, handleChange, submitForm,
+        isSubmitting, errors, values, handleChange, handleSubmit,
       }) => (
-        <Form>
+        <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
           <h2>{message}</h2>
           {
             initialValuesList && initialValuesList.map((detail) => (
@@ -123,7 +117,6 @@ const EditModalDetails = ({ details, message }) => {
           <ButtonContainer>
             <Button
               disabled={isSubmitting}
-              onClick={submitForm}
               className="update-button"
               type="secondary"
               text={isSubmitting ? 'Updating...' : 'Update'}
@@ -138,6 +131,7 @@ const EditModalDetails = ({ details, message }) => {
 EditModalDetails.propTypes = {
   details: PropTypes.objectOf(PropTypes.string).isRequired,
   message: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
 
 export default EditModalDetails;
