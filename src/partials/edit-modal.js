@@ -4,7 +4,7 @@ import ModalWrapper from '../components/modal-wrapper';
 import EditModalDetails from '../components/edit-details';
 
 const EditModal = ({
-  details, closeModal, message,
+  details, closeModal, message, action,
 }) => (
   <ModalWrapper
     closeModal={closeModal}
@@ -12,6 +12,7 @@ const EditModal = ({
     <EditModalDetails
       details={details}
       message={message}
+      action={action}
     />
   </ModalWrapper>
 );
@@ -20,6 +21,7 @@ EditModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   details: PropTypes.objectOf(PropTypes.string).isRequired,
   message: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
 
 export default EditModal;

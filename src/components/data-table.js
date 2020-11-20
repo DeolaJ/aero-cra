@@ -82,7 +82,7 @@ const DeleteButton = styled(ButtonText)`
 const DataTable = ({
   data, admin, openModal, fieldsShown, editFields, createFields,
   deleteModalMessage, editModalMessage, createModalMessage,
-  deleteAction, createAction,
+  deleteAction, createAction, editAction,
 }) => {
   const tableContent = data.map((item) => {
     const newContent = {};
@@ -163,6 +163,7 @@ const DataTable = ({
                                     open: true,
                                     details: modalEditFields(row),
                                     message: editModalMessage,
+                                    action: editAction,
                                   })
                                 )}
                               >
@@ -216,6 +217,7 @@ DataTable.propTypes = {
   deleteModalMessage: PropTypes.string.isRequired,
   deleteAction: PropTypes.func.isRequired,
   createAction: PropTypes.func.isRequired,
+  editAction: PropTypes.func.isRequired,
 };
 
 export default DataTable;

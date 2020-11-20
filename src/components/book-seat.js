@@ -77,7 +77,7 @@ const Booking = () => {
   useEffect(() => {
     if (!departureTerminal) return;
     const getTrip = async (placeId) => {
-      const response = await fetch(`${BASE_URL}trip/${placeId}`);
+      const response = await fetch(`${BASE_URL}/trip/${placeId}`);
       let trips = await response.json();
       trips = trips.data.map((tripData) => ({
         ...tripData,
@@ -91,7 +91,7 @@ const Booking = () => {
 
   useEffect(() => {
     async function getPlaces() {
-      const response = await fetch(`${BASE_URL}place`);
+      const response = await fetch(`${BASE_URL}/place`);
       let places = await response.json();
       places = places.data.map((place) => ({
         label: place.name,
