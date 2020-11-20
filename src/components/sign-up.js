@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable max-lines-per-function */
 import React from 'react';
@@ -8,7 +9,7 @@ import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { signUpUser, useAuthState, useAuthDispatch } from '../auth';
 
-import InputField from './input-field';
+import InputField from './input-field-wrapper';
 import { Button } from './button';
 import PasswordStrength from './password-strength';
 import THEME from '../constants';
@@ -121,25 +122,27 @@ const SignupForm = ({ setMode, type, closeModal }) => {
               <InputFieldContainer>
                 <InputField
                   label="First name"
+                  placeholder="Enter first name"
                   id="firstName"
                   name="firstName"
                   type="text"
                   value={values.firstName}
                   setValue={handleChange}
-                  error={errors.firstName}
+                  error={values.firstName && errors.firstName}
                   errorColor={THEME.colors.error.main}
                 />
               </InputFieldContainer>
 
               <InputFieldContainer>
                 <InputField
-                  label="last name"
+                  label="Last name"
+                  placeholder="Enter last name"
                   id="lastName"
                   name="lastName"
                   type="text"
                   value={values.lastName}
                   setValue={handleChange}
-                  error={errors.lastName}
+                  error={values.lastName && errors.lastName}
                   errorColor={THEME.colors.error.main}
                 />
               </InputFieldContainer>
@@ -147,12 +150,13 @@ const SignupForm = ({ setMode, type, closeModal }) => {
               <InputFieldContainer>
                 <InputField
                   label="email"
+                  placeholder="Enter email address"
                   id="email"
                   name="email"
                   type="email"
                   value={values.email}
                   setValue={handleChange}
-                  error={errors.email}
+                  error={values.email && errors.email}
                   errorColor={THEME.colors.error.main}
                 />
               </InputFieldContainer>
@@ -160,12 +164,13 @@ const SignupForm = ({ setMode, type, closeModal }) => {
               <InputFieldContainer>
                 <InputField
                   label="phone"
+                  placeholder="Enter phone number"
                   id="phone"
                   name="phone"
                   type="phone"
                   value={values.phone}
                   setValue={handleChange}
-                  error={errors.phone}
+                  error={values.phone && errors.phone}
                   errorColor={THEME.colors.error.main}
                 />
               </InputFieldContainer>
@@ -173,12 +178,13 @@ const SignupForm = ({ setMode, type, closeModal }) => {
               <InputFieldContainer>
                 <InputField
                   label="password"
+                  placeholder="Enter password"
                   id="password"
                   name="password"
                   type="password"
                   value={values.password}
                   setValue={handleChange}
-                  error={errors.password}
+                  error={values.password && errors.password}
                   errorColor={THEME.colors.error.main}
                 />
               </InputFieldContainer>
@@ -186,12 +192,13 @@ const SignupForm = ({ setMode, type, closeModal }) => {
               <InputFieldContainer>
                 <InputField
                   label="confirm password"
+                  placeholder="Enter confirm password"
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
                   value={values.confirmPassword}
                   setValue={handleChange}
-                  error={errors.confirmPassword}
+                  error={values.confirmPassword && errors.confirmPassword}
                   errorColor={THEME.colors.error.main}
                 />
               </InputFieldContainer>

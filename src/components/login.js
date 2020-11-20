@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { loginUser, useAuthState, useAuthDispatch } from '../auth';
 
-import InputField from './input-field';
+import InputField from './input-field-wrapper';
 import { Button } from './button';
 import THEME from '../constants';
 
@@ -102,12 +102,13 @@ const LoginForm = ({ setMode }) => {
           <InputFieldContainer>
             <InputField
               label="email"
+              placeholder="Enter email address"
               id="email"
               name="email"
               type="email"
               value={values.email}
               setValue={handleChange}
-              error={errors.email}
+              error={values.email && errors.email}
               errorColor={THEME.colors.error.main}
             />
           </InputFieldContainer>
@@ -115,12 +116,13 @@ const LoginForm = ({ setMode }) => {
           <InputFieldContainer>
             <InputField
               label="password"
+              placeholder="Enter password"
               id="password"
               name="password"
               type="password"
               value={values.password}
               setValue={handleChange}
-              error={errors.password}
+              error={values.password && errors.password}
               errorColor={THEME.colors.error.main}
             />
           </InputFieldContainer>

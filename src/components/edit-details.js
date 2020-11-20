@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
-import InputField from './input-field';
+import InputField from './input-field-wrapper';
 import { Button } from './button';
 import THEME from '../constants';
 
@@ -109,10 +109,11 @@ const EditModalDetails = ({ details, message }) => {
                   label={detail}
                   id={detail}
                   name={detail}
-                  type={typeof detail === 'number' ? 'number' : 'text'}
+                  placeholder={`Enter ${detail}`}
+                  type="text"
                   value={values[detail]}
                   setValue={handleChange}
-                  error={errors[detail]}
+                  error={values[detail] && errors[detail]}
                   errorColor={THEME.colors.error.main}
                 />
               </InputFieldContainer>
