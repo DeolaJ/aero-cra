@@ -1,9 +1,8 @@
 /* eslint-disable max-lines-per-function */
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
+import THEME from '../constants';
 
 const InputFieldWrapper = styled.div`
   margin-bottom: 1.5rem;
@@ -41,51 +40,47 @@ const InputWrapper = styled.div`
       -webkit-appearance: none;
       margin: 0;
     }
+
+    &.error {
+      border-color: ${THEME.colors.error.main};
+      box-shadodw: 0 0 1px 0 ${THEME.colors.error.main};
+    }
   }
 `;
 
 const InputField = ({
-  setValue, value, placeholder, label, error, errorColor,
-}) => {
-  const [inputValue, setInputValue] = useState(value);
-
-  const updateFieldControl = useRef(debounce((newValue, currentValue) => {
-    if (!isEqual(currentValue, newValue)) {
-      setValue(newValue);
+  setValue, value, placeholder, label, error, errorColor, id, name, type,
+}) => (
+  <InputFieldWrapper>
+    <InputLabel htmlFor={id}>
+      {label}
+    </InputLabel>
+    <InputWrapper>
+      <input
+        className={error.length > 1 ? 'input-value error' : 'input-value'}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={setValue}
+        onBlur={setValue}
+        id={id}
+        name={name}
+      />
+    </InputWrapper>
+    {
+      error && (
+        <InputFieldError color={errorColor}>
+          {error}
+        </InputFieldError>
+      )
     }
-  }, 800));
-
-  useEffect(() => updateFieldControl.current(inputValue, value), [inputValue]);
-
-  return (
-    <InputFieldWrapper>
-      <InputLabel>
-        {label}
-      </InputLabel>
-      <InputWrapper>
-        <input
-          className="input-value"
-          type="text"
-          value={inputValue}
-          placeholder={placeholder}
-          onChange={(e) => setInputValue(e.target.value)}
-          onBlur={(e) => setInputValue(e.target.value)}
-        />
-      </InputWrapper>
-      {
-        error && (
-          <InputFieldError color={errorColor}>
-            {error}
-          </InputFieldError>
-        )
-      }
-    </InputFieldWrapper>
-  );
-};
+  </InputFieldWrapper>
+);
 
 InputField.defaultProps = {
   placeholder: '',
   error: '',
+  type: '',
 };
 
 InputField.propTypes = {
@@ -94,9 +89,12 @@ InputField.propTypes = {
   ).isRequired,
   setValue: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
+  type: PropTypes.string,
   label: PropTypes.string.isRequired,
   error: PropTypes.string,
   errorColor: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default InputField;
