@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { toast } from 'react-toastify';
 import DataTable from '../data-table';
 import Section from '../section';
 import THEME from '../../constants';
@@ -45,14 +46,16 @@ const AdminContent = (/* { userToken } */) => {
       open: false,
       details: {},
     });
-    window.location.reload();
+    setTimeout(() => window.location.reload(), 400);
   };
 
   const placeDeleteAction = (id) => async () => {
     const response = await fetch(`${BASE_URL}/place/${id}`, { method: 'DELETE' });
     await response.json();
+    toast.success('Deleted details successfully');
     closeModalAndReload();
   };
+
   const placeCreateAction = async (values) => {
     const response = await fetch(`${BASE_URL}/place`, {
       method: 'POST',
@@ -60,8 +63,10 @@ const AdminContent = (/* { userToken } */) => {
       body: JSON.stringify(values),
     });
     await response.json();
+    toast.success('Created details successfully');
     closeModalAndReload();
   };
+
   const placeEditAction = async (id, values) => {
     const response = await fetch(`${BASE_URL}/place/${id}`, {
       method: 'PUT',
@@ -69,6 +74,7 @@ const AdminContent = (/* { userToken } */) => {
       body: JSON.stringify(values),
     });
     await response.json();
+    toast.success('Updated details successfully');
     closeModalAndReload();
   };
 

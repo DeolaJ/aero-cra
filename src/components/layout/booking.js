@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Section from '../section';
+import 'react-datetime/css/react-datetime.css';
 import HorList from '../../partials/horizontal-list';
 import { ButtonText } from '../button';
 import FlightBookings from './flight-bookings';

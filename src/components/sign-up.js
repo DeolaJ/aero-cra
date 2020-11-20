@@ -5,6 +5,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { signUpUser, useAuthState, useAuthDispatch } from '../auth';
@@ -100,6 +101,7 @@ const SignupForm = ({ setMode, type, closeModal }) => {
               };
               const response = await signUpUser(dispatch, data);
               if (!response.user) return;
+              toast.success('Signed up successfully');
               history.replace('/dashboard');
               setSubmitting(false);
             }, 1000);
@@ -256,6 +258,7 @@ const SignupForm = ({ setMode, type, closeModal }) => {
               const response = await signUpUser(dispatch, data);
               if (response.user) {
                 closeModal();
+                toast.success('Signed up successfully');
               }
               setSubmitting(false);
             }, 1000);

@@ -3,6 +3,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { loginUser, useAuthState, useAuthDispatch } from '../auth';
@@ -83,6 +84,7 @@ const LoginForm = ({ setMode }) => {
           const response = await loginUser(dispatch, data);
           setSubmitting(false);
           if (!response.user) return;
+          toast.success('Logged in successfully');
           history.replace('/dashboard');
         }, 1000);
       }}
