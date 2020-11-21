@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { useHistory } from 'react-router-dom';
 import Dropdown from '../partials/dropdown';
 import DatePickerOption from '../partials/date-picker';
 import HorList from '../partials/horizontal-list';
@@ -64,14 +65,25 @@ const Booking = () => {
   const [arrivalTerminal, setArrivalTerminal] = useState(null);
   const [departureTerminal, setDepartureTerminal] = useState(null);
   const [terminals, setTerminals] = useState([]);
-  const [destination, setDestination] = useState([]);
+  const [destinations, setDestinations] = useState([]);
   const [seatCount, setSeatCount] = useState(1);
   const [arrivalDate, setArrivalDate] = useState(new Date());
   const [departureDate, setDepartureDate] = useState(new Date());
+  const history = useHistory();
 
   const proceedToBook = () => {
-    // if user, route to the booking page
-    // if not user, Route to the Booking page and load the signup modal
+    const destination = destinations.find((dest) => dest.destination.id === arrivalTerminal);
+    console.log('destination here ', destinations, arrivalTerminal);
+    history.push({
+      pathname: '/bookings',
+      state: {
+        bookingData: {
+          ...destination,
+          departureDate,
+          arrivalDate,
+        },
+      },
+    });
   };
 
   useEffect(() => {
@@ -84,7 +96,7 @@ const Booking = () => {
         label: tripData.destination.name,
         value: tripData.destination.id,
       }));
-      setDestination(trips);
+      setDestinations(trips);
     };
     getTrip(departureTerminal);
   }, [departureTerminal]);
@@ -98,7 +110,6 @@ const Booking = () => {
         value: place.id,
       }));
       setTerminals(places);
-      setDepartureTerminal(places[0].value);
     }
     getPlaces();
   }, []);
@@ -140,7 +151,7 @@ const Booking = () => {
             </label>
             <Dropdown
               setValue={setArrivalTerminal}
-              options={destination}
+              options={destinations}
               value={arrivalTerminal}
               placeholder="Select arrival terminal"
             />
@@ -176,9 +187,16 @@ const Booking = () => {
             <Dropdown
               setValue={setSeatCount}
               options={[
-                { value: '1', label: 'Chocolate' },
-                { value: '2', label: 'Strawberry' },
-                { value: '3', label: 'Vanilla' },
+                { value: 1, label: '1' },
+                { value: 2, label: '2' },
+                { value: 3, label: '3' },
+                { value: 4, label: '4' },
+                { value: 5, label: '5' },
+                { value: 6, label: '6' },
+                { value: 7, label: '7' },
+                { value: 8, label: '8' },
+                { value: 9, label: '9' },
+                { value: 10, label: '10' },
               ]}
               value={seatCount}
             />

@@ -55,7 +55,13 @@ const Form = styled.form`
   }
 `;
 
-const EditModalDetails = ({ details, message, action }) => {
+const EditModalDetails = ({
+  details,
+  message,
+  action,
+  updateData,
+  closeModal,
+}) => {
   let initialValues;
   let initialValuesList;
 
@@ -87,7 +93,7 @@ const EditModalDetails = ({ details, message, action }) => {
       initialValues={initialValues}
       validationSchema={EditSchema()}
       onSubmit={(values, { setSubmitting }) => {
-        action(values.id, { ...values, id: undefined });
+        action(values.id, { ...values, id: undefined }, updateData, closeModal);
         setSubmitting(false);
       }}
     >
@@ -132,6 +138,8 @@ EditModalDetails.propTypes = {
   details: PropTypes.objectOf(PropTypes.string).isRequired,
   message: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default EditModalDetails;

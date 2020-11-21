@@ -55,7 +55,13 @@ const Form = styled.form`
   }
 `;
 
-const CreateModalDetails = ({ details, message, action }) => {
+const CreateModalDetails = ({
+  details,
+  message,
+  action,
+  updateData,
+  closeModal,
+}) => {
   let initialValues;
   let initialValuesList;
 
@@ -91,7 +97,7 @@ const CreateModalDetails = ({ details, message, action }) => {
       initialValues={initialValues}
       validationSchema={CreateSchema()}
       onSubmit={(values, { setSubmitting }) => {
-        action(values);
+        action(values, updateData, closeModal);
         setSubmitting(false);
       }}
     >
@@ -135,6 +141,8 @@ CreateModalDetails.propTypes = {
   details: PropTypes.objectOf(PropTypes.string).isRequired,
   message: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default CreateModalDetails;

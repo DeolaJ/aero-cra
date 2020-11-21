@@ -82,7 +82,7 @@ const DeleteButton = styled(ButtonText)`
 const DataTable = ({
   data, admin, openModal, fieldsShown, editFields, createFields,
   deleteModalMessage, editModalMessage, createModalMessage,
-  deleteAction, createAction, editAction,
+  deleteAction, createAction, editAction, updateData,
 }) => {
   const tableContent = data.map((item) => {
     const newContent = {};
@@ -119,6 +119,13 @@ const DataTable = ({
             ))
           }
           {
+            (!headers && (
+              <TableHeadCell>
+                No data available. Add new!
+              </TableHeadCell>
+            ))
+          }
+          {
             admin && (
               <TableHeadCell>
                 <CreateButton
@@ -130,6 +137,7 @@ const DataTable = ({
                       details: modalCreateFields,
                       message: createModalMessage,
                       action: createAction,
+                      updateData,
                     })
                   )}
                 >
@@ -149,7 +157,7 @@ const DataTable = ({
                   headers.length > 0 && headers.map((column, columnIndex) => (
                     <React.Fragment key={column}>
                       <TableBodyCell className={(columnIndex === 0) ? 'first-item' : ((columnIndex === headers.length - 1) ? 'last-item' : null)}>
-                        {row[column]}
+                        {typeof row[column] === 'object' ? row[column].name : row[column]}
                       </TableBodyCell>
                       {
                         (columnIndex === headers.length - 1) && (
@@ -164,6 +172,7 @@ const DataTable = ({
                                     details: modalEditFields(row),
                                     message: editModalMessage,
                                     action: editAction,
+                                    updateData,
                                   })
                                 )}
                               >
@@ -178,6 +187,7 @@ const DataTable = ({
                                     details: row,
                                     message: deleteModalMessage,
                                     action: deleteAction,
+                                    updateData,
                                   })
                                 )}
                               >
@@ -218,6 +228,7 @@ DataTable.propTypes = {
   deleteAction: PropTypes.func.isRequired,
   createAction: PropTypes.func.isRequired,
   editAction: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
 };
 
 export default DataTable;

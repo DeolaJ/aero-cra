@@ -1,6 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { useLocation } from 'react-router-dom';
 import { Button } from './components/button';
 import Body from './components/layout/body';
 import Section from './components/section';
@@ -20,93 +21,11 @@ const VehicleSelectWrapper = styled.div`
 `;
 
 const Bookings = () => {
-  const [activeVehicle, setActiveVehicle] = useState(-1);
-  // Router details
-  // const history = useHistory();
-
-  const availableVehicles = [
-    {
-      id: 0,
-      name: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos - Asaba',
-      tripType: 'Flight',
-      totalSeats: 25,
-      avalialbleSeats: 5,
-    },
-    {
-      id: 1,
-      name: 'Boeing',
-      imageLink: Logo,
-      trip: 'Lagos - Abuja',
-      tripType: 'Flight',
-      totalSeats: 35,
-      avalialbleSeats: 1,
-    },
-    {
-      id: 2,
-      name: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos - PH',
-      tripType: 'Bus',
-      totalSeats: 14,
-      avalialbleSeats: 2,
-    },
-    {
-      id: 3,
-      name: 'Toyota',
-      imageLink: Logo,
-      trip: 'Lagos - Asaba',
-      tripType: 'Bus',
-      totalSeats: 30,
-      avalialbleSeats: 10,
-    },
-    {
-      id: 4,
-      name: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos - Asaba',
-      tripType: 'Flight',
-      totalSeats: 20,
-      avalialbleSeats: 5,
-    },
-    {
-      id: 5,
-      name: 'Hilux Prado',
-      imageLink: Logo,
-      trip: 'Lagos - Asaba',
-      tripType: 'Flight',
-      totalSeats: 25,
-      avalialbleSeats: 5,
-    },
-    {
-      id: 6,
-      name: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos - Asaba',
-      tripType: 'Flight',
-      totalSeats: 25,
-      avalialbleSeats: 11,
-    },
-    {
-      id: 7,
-      name: 'Dana',
-      imageLink: Logo,
-      trip: 'Lagos - Abuja',
-      tripType: 'Flight',
-      totalSeats: 25,
-      avalialbleSeats: 5,
-    },
-    {
-      id: 8,
-      name: 'Hilux Premium',
-      imageLink: Logo,
-      trip: 'Lagos - PH',
-      tripType: 'Bus',
-      totalSeats: 20,
-      avalialbleSeats: 4,
-    },
-  ];
+  const location = useLocation();
+  const [activeVehicle, setActiveVehicle] = useState(null);
+  const { bookingData } = location.state;
+  console.log('booking data ', bookingData);
+  const { buses } = bookingData;
 
   const proceedToPay = () => {
     // Continue to payment;
@@ -120,17 +39,21 @@ const Bookings = () => {
           <VehicleSelectWrapper>
             <h4>Select a vehicle</h4>
             {
-              availableVehicles.map((vehicle) => (
+              buses.map((vehicle) => (
                 <VehicleListItem
                   key={vehicle.id}
                   name={vehicle.name}
-                  trip={vehicle.trip}
-                  tripType={vehicle.tripType}
-                  totalSeats={vehicle.totalSeats}
-                  imageLink={vehicle.imageLink}
+                  trip={`${bookingData.start.name} - ${bookingData.destination.name}`}
+                  tripType="one-way"
+                  totalSeats={vehicle.capacity}
+                  imageLink={Logo}
                   active={activeVehicle === vehicle.id}
-                  availableSeats={vehicle.availableSeats}
+                  availableSeats={12}
                   selectVehicle={() => setActiveVehicle(vehicle.id)}
+                  totalAmount={bookingData.price}
+                  departureDate={bookingData.departureDate.toDateString()}
+                  hasAirConditioning={false}
+                  hasPickup={false}
                 />
               ))
             }
@@ -139,6 +62,7 @@ const Bookings = () => {
             type="secondary"
             text="Proceed to pay"
             size="large"
+            disabled={Boolean(activeVehicle)}
             onClick={proceedToPay}
           />
         </Section>

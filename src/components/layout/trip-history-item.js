@@ -96,9 +96,9 @@ const TripHistoryItem = ({
 TripHistoryItem.propTypes = {
   busName: PropTypes.string.isRequired,
   imageLink: PropTypes.string.isRequired,
-  departureDate: PropTypes.instanceOf(Date).isRequired,
+  departureDate: PropTypes.string.isRequired,
   trip: PropTypes.string.isRequired,
-  arrivalDate: PropTypes.instanceOf(Date).isRequired,
+  arrivalDate: PropTypes.string.isRequired,
   tripType: PropTypes.string.isRequired,
   amountPaid: PropTypes.number.isRequired,
   seatsPaidFor: PropTypes.string.isRequired,

@@ -1,6 +1,5 @@
 /* eslint-disable max-lines-per-function */
 import React from 'react';
-// import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import TripHistoryItem from './trip-history-item';
 import Section from '../section';
@@ -8,7 +7,6 @@ import Logo from '../../images/logo.png';
 import THEME from '../../constants';
 
 const UserContentWrapper = styled.div`
-
   > section {
     padding-top: 8rem;
     padding-bottom: 10rem;
@@ -39,7 +37,7 @@ const UserContent = (
       departureDate: '11/12/2020 12:00',
       arrivalDate: '12/12/2020 10:00',
       seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
+      amountPaid: 20000,
     },
     {
       busName: 'Hilux',
@@ -49,127 +47,7 @@ const UserContent = (
       departureDate: '11/12/2020 12:00',
       arrivalDate: '12/12/2020 10:00',
       seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
-    },
-    {
-      busName: 'Hilux',
-      imageLink: Logo,
-      trip: 'Lagos to Asaba',
-      tripType: 'bus',
-      departureDate: '11/12/2020 12:00',
-      arrivalDate: '12/12/2020 10:00',
-      seatsPaidFor: '2',
-      amountPaid: 'amountPaid',
+      amountPaid: 12350,
     },
   ];
 
@@ -186,7 +64,7 @@ const UserContent = (
           {
             tripHistory.map((trip) => (
               <TripHistoryItem
-                key={trip}
+                key={`${trip.busName}-${trip.amountPaid}`}
                 busName={trip.busName}
                 imageLink={trip.imageLink}
                 trip={trip.trip}
