@@ -45,7 +45,7 @@ export const loginUser = async (dispatch, data) => {
     type: 'REQUEST_LOGIN',
   });
   return fetch(
-    `${BASE_URL}auth/token`,
+    `${BASE_URL}/auth/token`,
     {
       method: 'POST',
       headers: {

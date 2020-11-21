@@ -4,7 +4,7 @@ import ModalWrapper from '../components/modal-wrapper';
 import CreateModalDetails from '../components/create-details';
 
 const CreateModal = ({
-  details, closeModal, message, action,
+  details, closeModal, message, action, updateData,
 }) => (
   <ModalWrapper
     closeModal={closeModal}
@@ -13,6 +13,8 @@ const CreateModal = ({
       details={details}
       message={message}
       action={action}
+      updateData={updateData}
+      closeModal={closeModal}
     />
   </ModalWrapper>
 );
@@ -22,6 +24,7 @@ CreateModal.propTypes = {
   details: PropTypes.objectOf(PropTypes.string).isRequired,
   message: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
 };
 
 export default CreateModal;

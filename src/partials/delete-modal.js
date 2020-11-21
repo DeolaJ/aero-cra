@@ -4,7 +4,7 @@ import ModalWrapper from '../components/modal-wrapper';
 import DeleteModalDetails from '../components/delete-details';
 
 const DeleteModal = ({
-  details, closeModal, message, action,
+  details, closeModal, message, action, updateData,
 }) => (
   <ModalWrapper
     closeModal={closeModal}
@@ -14,6 +14,7 @@ const DeleteModal = ({
       closeModal={closeModal}
       message={message}
       action={action}
+      updateData={updateData}
     />
   </ModalWrapper>
 );
@@ -23,6 +24,7 @@ DeleteModal.propTypes = {
   details: PropTypes.objectOf(PropTypes.string).isRequired,
   message: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
 };
 
 export default DeleteModal;

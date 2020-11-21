@@ -59,8 +59,8 @@ const TagLabel = styled.div`
 `;
 
 const VehicleListItem = ({
-  name, imageLink, trip, tripType, totalSeats, availableSeats,
-  selectVehicle, active, departureDate, hasAirConditioning, hasPickup, totalAmount,
+  name, imageLink, trip, tripType, totalSeats, availableSeats, selectVehicle,
+  active, departureDate, hasAirConditioning, hasPickup, totalAmount,
 }) => (
   <ContentWrapper type="button" onClick={selectVehicle} active={active}>
     <HorList>
@@ -134,7 +134,7 @@ VehicleListItem.propTypes = {
   tripType: PropTypes.string.isRequired,
   selectVehicle: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,
-  departureDate: PropTypes.instanceOf(Date).isRequired,
+  departureDate: PropTypes.string.isRequired,
   hasAirConditioning: PropTypes.bool.isRequired,
   hasPickup: PropTypes.bool.isRequired,
   totalAmount: PropTypes.number.isRequired,

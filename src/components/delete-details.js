@@ -25,6 +25,7 @@ const DeleteModalDetails = ({
   closeModal,
   message,
   action,
+  updateData,
 }) => (
   <DeleteModalWrapper>
     <p>{message}</p>
@@ -32,7 +33,7 @@ const DeleteModalDetails = ({
       <Button
         text="Delete"
         type="primary"
-        onClick={action(details.id)}
+        onClick={action(details.id, updateData, closeModal)}
       />
       <Button
         text="Cancel"
@@ -48,6 +49,7 @@ DeleteModalDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
 };
 
 export default DeleteModalDetails;
