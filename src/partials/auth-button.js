@@ -36,7 +36,7 @@ const AuthButton = ({
       setOpenModal((currentStatus) => ({
         ...currentStatus,
         open: true,
-        mode: 'sign-up',
+        mode: 'login',
         type: 'booking',
       }));
     }
@@ -91,7 +91,7 @@ const AuthButton = ({
 };
 
 AuthButton.propTypes = {
-  location: PropTypes.objectOf(PropTypes.string).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default withRouter(AuthButton);

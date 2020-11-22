@@ -24,7 +24,6 @@ const Bookings = () => {
   const location = useLocation();
   const [activeVehicle, setActiveVehicle] = useState(null);
   const { bookingData } = location.state;
-  console.log('booking data ', bookingData);
   const { buses } = bookingData;
 
   const proceedToPay = () => {

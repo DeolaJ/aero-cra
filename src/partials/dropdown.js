@@ -48,17 +48,18 @@ const DropdownOption = ({
 
 DropdownOption.defaultProps = {
   placeholder: '',
+  value: null,
 };
 
 DropdownOption.propTypes = {
   value: PropTypes.oneOfType(
     [PropTypes.string, PropTypes.number, PropTypes.bool],
-  ).isRequired,
+  ),
   setValue: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.bool],
+      [PropTypes.object],
     ),
   ).isRequired,
 };

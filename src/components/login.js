@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-curly-brace-presence */
+/* eslint-disable max-lines-per-function */
 import React from 'react';
 import { Formik } from 'formik';
 import styled from '@emotion/styled';
@@ -63,7 +64,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Required'),
 });
 
-const LoginForm = ({ setMode }) => {
+const LoginForm = ({ setMode, type, closeModal }) => {
   const history = useHistory();
   const initialValues = {
     email: 'ben@ben.ben',
@@ -72,97 +73,190 @@ const LoginForm = ({ setMode }) => {
   const dispatch = useAuthDispatch();
   const { loading, errorMessage } = useAuthState();
 
-  return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={LoginSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(async () => {
-          const data = {
-            ...values,
-          };
-          const response = await loginUser(dispatch, data);
-          setSubmitting(false);
-          if (!response.user) return;
-          toast.success('Logged in successfully');
-          history.replace('/dashboard');
-        }, 1000);
-      }}
-    >
-      {({
-        isSubmitting, errors, values, handleChange, handleSubmit,
-      }) => (
-        <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-          <h2>Welcome back!</h2>
-          {
-            errorMessage ? (
-              <p styles={{ color: THEME.colors.error.main }}>
-                {errorMessage}
+  switch (type) {
+    case 'nav': {
+      return (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={LoginSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(async () => {
+              const data = {
+                ...values,
+              };
+              const response = await loginUser(dispatch, data);
+              setSubmitting(false);
+              if (!response.user) return;
+              toast.success('Logged in successfully');
+              history.replace('/dashboard');
+            }, 1000);
+          }}
+        >
+          {({
+            isSubmitting, errors, values, handleChange, handleSubmit,
+          }) => (
+            <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+              <h2>Welcome back!</h2>
+              {
+                errorMessage ? (
+                  <p styles={{ color: THEME.colors.error.main }}>
+                    {errorMessage}
+                  </p>
+                ) : null
+              }
+              <InputFieldContainer>
+                <InputField
+                  label="email"
+                  placeholder="Enter email address"
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={values.email}
+                  setValue={handleChange}
+                  error={values.email && errors.email}
+                  errorColor={THEME.colors.error.main}
+                />
+              </InputFieldContainer>
+
+              <InputFieldContainer>
+                <InputField
+                  label="password"
+                  placeholder="Enter password"
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={values.password}
+                  setValue={handleChange}
+                  error={values.password && errors.password}
+                  errorColor={THEME.colors.error.main}
+                />
+              </InputFieldContainer>
+
+              <ButtonContainer>
+                <Button
+                  disabled={isSubmitting || loading}
+                  className="login-button"
+                  type="primary"
+                  text={isSubmitting ? 'Logging in...' : 'Login'}
+                />
+              </ButtonContainer>
+
+              <p>
+                {"Don't"}
+                {' '}
+                have an account? Click
+                {' '}
+                <Button
+                  text="here"
+                  type="default"
+                  onClick={() => setMode((currentStatus) => ({
+                    ...currentStatus,
+                    open: true,
+                    mode: 'sign-up',
+                  }))}
+                />
+                {' '}
+                to sign up
               </p>
-            ) : null
-          }
-          <InputFieldContainer>
-            <InputField
-              label="email"
-              placeholder="Enter email address"
-              id="email"
-              name="email"
-              type="email"
-              value={values.email}
-              setValue={handleChange}
-              error={values.email && errors.email}
-              errorColor={THEME.colors.error.main}
-            />
-          </InputFieldContainer>
+            </Form>
+          )}
+        </Formik>
+      );
+    }
 
-          <InputFieldContainer>
-            <InputField
-              label="password"
-              placeholder="Enter password"
-              id="password"
-              name="password"
-              type="password"
-              value={values.password}
-              setValue={handleChange}
-              error={values.password && errors.password}
-              errorColor={THEME.colors.error.main}
-            />
-          </InputFieldContainer>
+    case 'booking': {
+      return (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={LoginSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(async () => {
+              const data = {
+                ...values,
+              };
+              const response = await loginUser(dispatch, data);
+              setSubmitting(false);
+              if (!response.user) return;
+              toast.success('Logged in successfully');
+              history.replace('/dashboard');
+            }, 1000);
+          }}
+        >
+          {({
+            isSubmitting, errors, values, handleChange, handleSubmit,
+          }) => (
+            <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+              <h2>Welcome back!</h2>
+              {
+                errorMessage ? (
+                  <p styles={{ color: THEME.colors.error.main }}>
+                    {errorMessage}
+                  </p>
+                ) : null
+              }
+              <InputFieldContainer>
+                <InputField
+                  label="email"
+                  placeholder="Enter email address"
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={values.email}
+                  setValue={handleChange}
+                  error={values.email && errors.email}
+                  errorColor={THEME.colors.error.main}
+                />
+              </InputFieldContainer>
 
-          <ButtonContainer>
-            <Button
-              disabled={isSubmitting && loading}
-              className="login-button"
-              type="primary"
-              text={isSubmitting ? 'Logging in...' : 'Login'}
-            />
-          </ButtonContainer>
+              <InputFieldContainer>
+                <InputField
+                  label="password"
+                  placeholder="Enter password"
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={values.password}
+                  setValue={handleChange}
+                  error={values.password && errors.password}
+                  errorColor={THEME.colors.error.main}
+                />
+              </InputFieldContainer>
 
-          <p>
-            {"Don't"}
-            {' '}
-            have an account? Click
-            {' '}
-            <Button
-              text="here"
-              type="default"
-              onClick={() => setMode((currentStatus) => ({
-                ...currentStatus,
-                open: true,
-                mode: 'sign-up',
-              }))}
-            />
-            {' '}
-            to sign up
-          </p>
-        </Form>
-      )}
-    </Formik>
-  );
+              <ButtonContainer>
+                <Button
+                  disabled={isSubmitting || loading}
+                  className="login-button"
+                  type="primary"
+                  text={isSubmitting ? 'Logging in...' : 'Login'}
+                />
+              </ButtonContainer>
+
+              <ButtonContainer>
+                <Button
+                  onClick={closeModal}
+                  type="secondary"
+                  className="login-button"
+                  text={'Proceed without logging in'}
+                />
+              </ButtonContainer>
+            </Form>
+          )}
+        </Formik>
+      );
+    }
+
+    default: return null;
+  }
+};
+
+LoginForm.defaultProps = {
+  closeModal: () => null,
 };
 
 LoginForm.propTypes = {
   setMode: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  closeModal: PropTypes.func,
 };
 
 export default LoginForm;

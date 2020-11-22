@@ -7,29 +7,32 @@ export const signUpUser = async (dispatch, data) => {
     type: 'REQUEST_SIGNUP',
   });
   return fetch(
-    `${BASE_URL}/signup`,
+    `${BASE_URL}/auth/register`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        confirmPassword: undefined,
+      }),
     },
   )
     .then((response) => response.json())
     .then((response) => {
-      if (response.user) {
-        localStorage.setItem('user', JSON.stringify(response));
+      if (response.error) {
+        dispatch({
+          type: 'SIGNUP_ERROR',
+          error: response.error,
+        });
+      } else {
         dispatch({
           type: 'SIGNUP_SUCCESS',
-          payload: response,
+          payload: response.data,
         });
-        return response;
       }
-      return dispatch({
-        type: 'SIGNUP_ERROR',
-        error: response.errors[0],
-      });
+      return response;
     })
     .catch((error) => {
       console.log(error);
