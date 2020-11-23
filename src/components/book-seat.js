@@ -73,7 +73,6 @@ const Booking = () => {
 
   const proceedToBook = () => {
     const destination = destinations.find((dest) => dest.destination.id === arrivalTerminal);
-    console.log('destination here ', destinations, arrivalTerminal);
     history.push({
       pathname: '/bookings',
       state: {

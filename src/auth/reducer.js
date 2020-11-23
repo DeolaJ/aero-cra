@@ -33,8 +33,7 @@ export const AuthReducer = (initialState = defaultState, action) => {
     case 'SIGNUP_SUCCESS': {
       return {
         ...initialState,
-        user: action.payload.user,
-        token: action.payload.user.token,
+        message: action.payload.message,
         loading: false,
       };
     }
