@@ -3,18 +3,18 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import VehicleBooking from './components/layout/vehicle-booking';
 
-const Bookings = () => {
+const JetListings = () => {
   const location = useLocation();
-  const { bookingData } = location.state;
-  console.log('booking data ', bookingData);
-  const { buses } = bookingData;
+  const { jetBookingData } = location.state;
+  console.log('jet booking data ', jetBookingData);
+  const { jets } = jetBookingData;
 
   return (
     <VehicleBooking
-      bookingData={bookingData}
-      vehicles={buses}
+      bookingData={jetBookingData}
+      vehicles={jets}
     />
   );
 };
 
-export default Bookings;
+export default JetListings;

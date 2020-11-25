@@ -29,6 +29,8 @@ h1, h2, h3, h4, h5, h6 {
   color: #404668;
   line-height: 1.25;
   font-weight: 500;
+  margin-top: .5rem;
+  margin-bottom: .3rem;
 }
 
 h1 {
@@ -51,6 +53,7 @@ h4 {
 .body, h5, p {
   font-size: 1.05rem;
   line-height: 1.5;
+  margin: .5rem 0;
 }
 
 h6 {

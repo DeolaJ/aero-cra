@@ -6,6 +6,7 @@ import HorList from '../../partials/horizontal-list';
 import { ButtonText } from '../button';
 import FlightBookings from './flight-bookings';
 import BusBookings from './bus-bookings';
+import JetBookings from './jet-bookings';
 
 const BookingWrapper = styled.div`
   margin-top: 3rem;
@@ -38,6 +39,7 @@ const BookingWrapper = styled.div`
 const SectionButton = styled(ButtonText)`
   text-transform: uppercase;
   font-weight: 700;
+  font-size: 1.125rem;
 
   ${(props) => (props.active && `
     opacity: .8;
@@ -54,7 +56,7 @@ const Booking = () => {
 
   return (
     <BookingWrapper className="bookings">
-      <HorList spacing={20}>
+      <HorList spacing={20} wrapList={400}>
         <SectionButton
           type={section === 'flight' ? 'primary' : 'secondary'}
           onClick={() => (setSection('flight'))}
@@ -68,6 +70,13 @@ const Booking = () => {
           active={section === 'bus'}
         >
           Book a bus
+        </SectionButton>
+        <SectionButton
+          type={section === 'jets' ? 'primary' : 'secondary'}
+          onClick={() => (setSection('jets'))}
+          active={section === 'jets'}
+        >
+          Book a Jet
         </SectionButton>
       </HorList>
       <Section
@@ -84,6 +93,11 @@ const Booking = () => {
         {
           section === 'bus' && (
             <BusBookings />
+          )
+        }
+        {
+          section === 'jets' && (
+            <JetBookings />
           )
         }
       </Section>
