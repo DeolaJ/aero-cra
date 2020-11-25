@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button } from './button';
 
 const JetCardWrapper = styled.div`
-  flex: 0 0 29%;
+  flex: 0 0 28%;
   margin: 2.5%;
   box-shadow: 0px 4px 11px 0px rgba(0, 23, 44, 0.1);
   border-radius: 3px;
