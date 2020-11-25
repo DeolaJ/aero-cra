@@ -52,7 +52,7 @@ const SectionButton = styled(ButtonText)`
 `;
 
 const Booking = () => {
-  const [section, setSection] = useState('flight');
+  const [section, setSection] = useState('bus');
 
   return (
     <BookingWrapper className="bookings">

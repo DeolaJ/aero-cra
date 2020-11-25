@@ -6,7 +6,6 @@ import VehicleBooking from './components/layout/vehicle-booking';
 const Bookings = () => {
   const location = useLocation();
   const { bookingData } = location.state;
-  console.log('booking data ', bookingData);
   const { buses } = bookingData;
 
   return (
