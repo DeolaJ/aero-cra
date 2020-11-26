@@ -6,51 +6,73 @@ import InputField from './input-field';
 
 const InputFieldWrapper = ({
   setValue, value, placeholder, label, error, errorColor, id, name,
-  type,
+  type, regular,
 }) => {
-  const [inputValue, setInputValue] = useState(value);
-
-  useEffect(() => {
-    if (value) {
-      setInputValue(value);
-    } else {
-      setInputValue('');
+  switch (regular) {
+    case true: {
+      return (
+        <InputField
+          label={label}
+          id={id}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          setValue={setValue}
+          errorColor={errorColor}
+        />
+      );
     }
-  }, [value]);
 
-  const debouncedHandleOnChange = useDebouncedCallback((event) => {
-    if (setValue) {
-      setValue(event);
+    case false: {
+      const [inputValue, setInputValue] = useState(value);
+
+      useEffect(() => {
+        if (value) {
+          setInputValue(value);
+        } else {
+          setInputValue('');
+        }
+      }, [value]);
+
+      const debouncedHandleOnChange = useDebouncedCallback((event) => {
+        if (setValue) {
+          setValue(event);
+        }
+      }, 800);
+
+      const handleOnChange = useCallback((event) => {
+        event.persist();
+
+        const newValue = event.currentTarget.value;
+        setInputValue(newValue);
+        debouncedHandleOnChange.callback(event);
+      }, []);
+
+      return (
+        <InputField
+          label={label}
+          id={id}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={inputValue}
+          setValue={handleOnChange}
+          error={error}
+          errorColor={errorColor}
+        />
+      );
     }
-  }, 800);
 
-  const handleOnChange = useCallback((event) => {
-    event.persist();
-
-    const newValue = event.currentTarget.value;
-    setInputValue(newValue);
-    debouncedHandleOnChange.callback(event);
-  }, []);
-
-  return (
-    <InputField
-      label={label}
-      id={id}
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      value={inputValue}
-      setValue={handleOnChange}
-      error={error}
-      errorColor={errorColor}
-    />
-  );
+    default: return null;
+  }
 };
 
 InputFieldWrapper.defaultProps = {
   placeholder: '',
   error: '',
   type: '',
+  regular: false,
 };
 
 InputFieldWrapper.propTypes = {
@@ -65,6 +87,7 @@ InputFieldWrapper.propTypes = {
   errorColor: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  regular: PropTypes.bool,
 };
 
 export default InputFieldWrapper;
