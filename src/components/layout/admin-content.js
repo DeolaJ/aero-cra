@@ -11,6 +11,7 @@ import CreateModal from '../../partials/create-modal';
 import * as placesData from '../../actions/place';
 import * as tripsData from '../../actions/trip';
 import * as busData from '../../actions/bus';
+import * as companyData from '../../actions/company';
 
 const AdminContentWrapper = styled.div`
   > section {
@@ -29,6 +30,7 @@ const AdminContent = (/* { userToken } */) => {
   const [places, setPlaces] = useState([]);
   const [trips, setTrips] = useState([]);
   const [buses, setBuses] = useState([]);
+  const [companies, setCompanies] = useState([]);
 
   const [modalControl, setModalControl] = useState({
     type: '',
@@ -37,16 +39,19 @@ const AdminContent = (/* { userToken } */) => {
   });
 
   useEffect(() => {
-    let placesDb;
-    let tripsDb;
-    let busesDb;
     async function asyncFxns() {
-      placesDb = await placesData.getPlaces();
-      tripsDb = await tripsData.getTrips();
-      busesDb = await busData.getBuses();
-      setPlaces(placesDb.data);
-      setTrips(tripsDb.data);
-      setBuses(busesDb.data);
+      placesData.getPlaces().then((response) => {
+        setPlaces(response.data);
+      });
+      tripsData.getTrips().then((response) => {
+        setTrips(response.data);
+      });
+      busData.getBuses().then((response) => {
+        setBuses(response.data);
+      });
+      companyData.getCompanies().then((response) => {
+        setCompanies(response.data);
+      });
     }
     asyncFxns();
   }, []);
@@ -109,6 +114,23 @@ const AdminContent = (/* { userToken } */) => {
     }
   };
 
+  const updateCompanyData = (type, newData) => {
+    let newCompanies;
+    let index;
+    if (type === 'create') {
+      newCompanies = [...trips, newData];
+      setTrips(newCompanies);
+    } else if (type === 'edit') {
+      index = companies.findIndex((item) => item.id === newData.id);
+      companies.splice(index, 1, newData);
+      setCompanies(companies);
+    } else if (type === 'delete') {
+      index = companies.findIndex((item) => item.id === newData.id);
+      companies.pop(index);
+      setCompanies(companies);
+    }
+  };
+
   return (
     <AdminContentWrapper>
       <Section>
@@ -161,6 +183,22 @@ const AdminContent = (/* { userToken } */) => {
           createAction={busData.createBus}
           editAction={busData.editBus}
           updateData={updateBusData}
+        />
+        <br />
+        <DataTable
+          data={companies}
+          admin
+          openModal={setModalControl}
+          fieldsShown={companyData.SHOWN_FIELDS}
+          editFields={companyData.EDIT_FIELDS}
+          createFields={companyData.CREATE_FIELDS}
+          deleteModalMessage={companyData.DELETE_MESSAGE}
+          editModalMessage={companyData.EDIT_MESSAGE}
+          createModalMessage={companyData.CREATE_MESSAGE}
+          deleteAction={companyData.deleteCompany}
+          createAction={companyData.createCompany}
+          editAction={companyData.editCompany}
+          updateData={updateCompanyData}
         />
         {
           (modalControl.type === 'edit') && modalControl.open && (
