@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HorList from './horizontal-list';
 import { Button } from '../components/button';
@@ -7,7 +7,7 @@ import { logout, useAuthState, useAuthDispatch } from '../auth';
 import AuthModal from './auth-modal';
 
 const AuthButton = ({
-  location,
+  location, mobile,
 }) => {
   const history = useHistory();
   const [openModal, setOpenModal] = useState({
@@ -43,7 +43,7 @@ const AuthButton = ({
   }, []);
 
   return (
-    <HorList>
+    <HorList wrapList={mobile ? 768 : null} spacing={16}>
       {
         !user ? (
           <>
@@ -69,11 +69,19 @@ const AuthButton = ({
             />
           </>
         ) : (
-          <Button
-            text="Logout"
-            type="secondary"
-            onClick={handleLogout}
-          />
+          <>
+            <Button
+              text="Logout"
+              type="secondary"
+              onClick={handleLogout}
+            />
+            <Link to="/dashboard">
+              <Button
+                text="Dashboard"
+                type="primary"
+              />
+            </Link>
+          </>
         )
       }
       {
@@ -90,8 +98,13 @@ const AuthButton = ({
   );
 };
 
+AuthButton.defaultProps = {
+  mobile: false,
+};
+
 AuthButton.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  mobile: PropTypes.bool,
 };
 
 export default withRouter(AuthButton);

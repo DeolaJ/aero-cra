@@ -13,7 +13,7 @@ const BookingWrapper = styled.div`
   padding: 0;
 
   > div {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     justify-content: center;
   }
 
@@ -21,9 +21,20 @@ const BookingWrapper = styled.div`
     padding: 2rem 1rem;
   }
 
+  @media (max-width: 768px) {
+
+    > div {
+      text-align: center;
+    }
+  }
+
   @media (min-width: 768px) {
     margin-top: -13rem;
     padding: 4rem;
+
+    > div {
+      margin-bottom: 1.5rem;
+    }
 
     > section {
       padding: 2rem;
@@ -51,6 +62,19 @@ const SectionButton = styled(ButtonText)`
   }
 `;
 
+const BookingText = styled.span`
+
+  ${(props) => (props.mobile ? `
+    @media (min-width: 768px) {
+      display: none;
+    }
+  ` : `
+    @media (max-width: 768px) {
+      display: none;
+    }
+  `)}
+`;
+
 const Booking = () => {
   const [section, setSection] = useState('bus');
 
@@ -62,21 +86,24 @@ const Booking = () => {
           onClick={() => (setSection('flight'))}
           active={section === 'flight'}
         >
-          Book flights
+          <BookingText>Book Flights</BookingText>
+          <BookingText mobile>Flights</BookingText>
         </SectionButton>
         <SectionButton
           type={section === 'bus' ? 'primary' : 'secondary'}
           onClick={() => (setSection('bus'))}
           active={section === 'bus'}
         >
-          Book a bus
+          <BookingText>Book a Bus</BookingText>
+          <BookingText mobile>Bus</BookingText>
         </SectionButton>
         <SectionButton
           type={section === 'jets' ? 'primary' : 'secondary'}
           onClick={() => (setSection('jets'))}
           active={section === 'jets'}
         >
-          Book a Jet
+          <BookingText>Book a Jet</BookingText>
+          <BookingText mobile>Jet</BookingText>
         </SectionButton>
       </HorList>
       <Section
