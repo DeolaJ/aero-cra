@@ -38,7 +38,7 @@ export const signUpUser = async (dispatch, data) => {
       console.log(error);
       dispatch({
         type: 'SIGNUP_ERROR',
-        error,
+        // error,
       });
     });
 };
@@ -76,7 +76,7 @@ export const loginUser = async (dispatch, data) => {
       console.log(error);
       dispatch({
         type: 'LOGIN_ERROR',
-        error,
+        // error,
       });
     });
 };

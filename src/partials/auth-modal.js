@@ -17,7 +17,7 @@ const AuthModal = ({
             mode === 'sign-up' ? (
               <SignupForm setMode={setMode} closeModal={closeModal} type="nav" />
             ) : (
-              <LoginForm setMode={setMode} />
+              <LoginForm setMode={setMode} closeModal={closeModal} type="nav" />
             )
           }
         </>

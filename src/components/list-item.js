@@ -26,6 +26,18 @@ const ContentWrapper = styled.article`
       margin-top: 2rem;
     }
   `)}
+
+  ${(props) => (props.type === 'news-feed' && `
+    margin-bottom: 2rem;
+    
+    img {
+      width: 100%;
+    }
+
+    + article.news-feed {
+      margin-left: 0;
+    }
+  `)}
 `;
 
 const ContentImageWrapper = styled.div`
@@ -34,10 +46,31 @@ const ContentImageWrapper = styled.div`
   display: inline-block;
   text-align: center;
   background-color: white;
+
+  ${(props) => (props.type === 'news-feed' && `
+    padding: 0;
+    border-radius: .2rem;
+    flex: 0 0 20%;
+    background: transparent;
+
+    img {
+      width: 100%;
+    }
+  `)}
 `;
 
 const ContentTitle = styled.h4`
-  color: ${THEME.colors.grey[600]}
+  color: ${THEME.colors.grey[600]};
+
+  + span {
+    margin-top: -.3rem;
+  }
+`;
+
+const ContentTitleSub = styled.span`
+  color: ${THEME.colors.grey[300]};
+  display: block;
+  margin-bottom: .5rem;
 `;
 
 const ContentAuthor = styled.p`
@@ -46,7 +79,8 @@ const ContentAuthor = styled.p`
 `;
 
 const ContentDescription = styled.p`
-  color: ${THEME.colors.grey[800]}
+  color: ${THEME.colors.grey[800]};
+  line-height: 1.5;
 `;
 
 const ContentImage = styled.img`
@@ -56,6 +90,10 @@ const ContentImage = styled.img`
 const ContentBodyWrapper = styled.div`
   padding: 1.5rem;
   background-color: white;
+
+  ${(props) => (props.type === 'news-feed' && `
+    background: transparent;
+  `)}
 `;
 
 const ListItem = ({
@@ -74,6 +112,29 @@ const ListItem = ({
           <ContentDescription>
             {content.text}
           </ContentDescription>
+        </ContentWrapper>
+      );
+    }
+
+    case 'news-feed': {
+      return (
+        <ContentWrapper type={type} className="news-feed">
+          <HorList>
+            <ContentImageWrapper type={type}>
+              <ContentImage src={content.imageLink} alt={content.title} />
+            </ContentImageWrapper>
+            <ContentBodyWrapper type={type}>
+              <ContentTitle>
+                {content.title}
+              </ContentTitle>
+              <ContentTitleSub>
+                {content.createdAt}
+              </ContentTitleSub>
+              <ContentDescription>
+                {content.text}
+              </ContentDescription>
+            </ContentBodyWrapper>
+          </HorList>
         </ContentWrapper>
       );
     }

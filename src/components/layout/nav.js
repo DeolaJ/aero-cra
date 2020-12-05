@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
+import { useLocation } from 'react-router-dom';
 import HeaderContainer from '../../partials/header-container';
-import HorList from '../../partials/horizontal-list';
 import AuthButton from '../../partials/auth-button';
+import MobileNav from './mobile-nav';
+import DesktopNav from './desktop-nav';
+import LanguageDropdown from './language-dropdown';
 import Logo from '../../images/logo.png';
-import { ButtonIcon } from '../button';
+import HorList from '../../partials/horizontal-list';
 
 const NavWrapper = styled.nav`
   position: absolute;
@@ -17,6 +20,10 @@ const NavWrapper = styled.nav`
 
   .header-container {
     flex-direction: column;
+    
+    > div {
+      width: 100%;
+    }
   }
 
   @media (min-width: 768px) {
@@ -27,37 +34,56 @@ const NavWrapper = styled.nav`
   }
 `;
 
-const NavControl = styled(ButtonIcon)`
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-
-  @media (min-width: 768px) {
-    display: none;
-  }
-`;
-
 const Nav = () => {
-  const [open, setOpen] = useState(true);
+  const navItemsHome = [
+    {
+      text: 'About us',
+      selector: '.about-us-section',
+    },
+    {
+      text: 'How it works',
+      selector: '.hiw-section',
+    },
+    {
+      text: 'Contact us',
+      selector: '.contact-us-section',
+    },
+  ];
+
+  const location = useLocation();
+
+  const scrollToSection = (selector) => {
+    // eslint-disable-next-line no-undef
+    document.querySelector(selector).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
+  const isHome = location.pathname === '/';
 
   return (
     <NavWrapper>
       <HeaderContainer>
-        <NavControl
-          onClick={() => setOpen((currentOpen) => !currentOpen)}
-        >
-          <img src={Logo} alt="nav icon" />
-        </NavControl>
-        <img src={Logo} alt="site logo" />
-        {
-          open && (
-            <HorList>
-              {/* <Link>Contact</Link> */}
-              <AuthButton />
-            </HorList>
-          )
-        }
+        <HorList>
+          <img src={Logo} alt="site logo" />
+          <DesktopNav
+            navItemsHome={navItemsHome}
+            isHome={isHome}
+            scrollToSection={scrollToSection}
+          >
+            <AuthButton />
+            <LanguageDropdown />
+          </DesktopNav>
+          <MobileNav
+            navItemsHome={navItemsHome}
+            isHome={isHome}
+            scrollToSection={scrollToSection}
+          >
+            <AuthButton mobile />
+            <LanguageDropdown />
+          </MobileNav>
+        </HorList>
       </HeaderContainer>
     </NavWrapper>
   );

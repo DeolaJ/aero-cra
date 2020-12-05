@@ -144,8 +144,7 @@ const Footer = () => {
         &copy;
         {' '}
         { new Date().getFullYear() }
-        {' '}
-        <a href="deola.xyz" target="_blank" rel="noopener noreferrer" className="footer__link">Deola</a>
+        {' Safe Travels'}
       </FooterSub>
     </FooterWrapper>
   );

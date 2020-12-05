@@ -51,7 +51,7 @@ const LogoSection = () => {
 
   return (
     <LogoSectionWrapper>
-      <HorList>
+      <HorList wrapList={600}>
         {
           trustedPartners.map((logos) => (
             <LogoContainer key={logos.id} href={logos.link} rel="noopener noreferrer" target="_blank">

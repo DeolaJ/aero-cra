@@ -3,6 +3,10 @@ import styled from '@emotion/styled';
 import Section from '../section';
 import ContentCarousel from '../content-carousel';
 import ListItem from '../list-item';
+import Star from '../../images/star.svg';
+import Delivery from '../../images/delivery.svg';
+import Phone from '../../images/phone.svg';
+import Timer from '../../images/timer.svg';
 
 const HowItWorksWrapper = styled.div`
 `;
@@ -28,28 +32,32 @@ const HowItWorks = () => {
   const contentList = [
     {
       id: 1,
+      imageLink: Star,
       title: 'Random',
       text: 'lorem ipsum jfos odis osidfs oin osndosd oinson',
     },
     {
       id: 2,
+      imageLink: Phone,
       title: 'Random',
       text: 'lorem ipsum jfos odis osidfs oin osndosd oinson',
     },
     {
       id: 3,
+      imageLink: Timer,
       title: 'Random',
       text: 'lorem ipsum jfos odis osidfs oin osndosd oinson',
     },
     {
       id: 4,
+      imageLink: Delivery,
       title: 'Random',
       text: 'lorem ipsum jfos odis osidfs oin osndosd oinson',
     },
   ];
 
   return (
-    <HowItWorksWrapper>
+    <HowItWorksWrapper className="hiw-section">
       <Section
         title="How it works"
       >
@@ -58,7 +66,7 @@ const HowItWorks = () => {
             contentList.map((content) => (
               <ListItem
                 key={content.id}
-                type="howto"
+                type="about-us"
                 content={content}
               />
             ))
@@ -68,7 +76,7 @@ const HowItWorks = () => {
           <ContentCarousel
             items={contentList}
             resultsPerView={1}
-            type="header"
+            type="about-us"
           />
         </HowItWorksContentMobile>
       </Section>

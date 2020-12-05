@@ -11,6 +11,7 @@ const TrustSectionWrapper = styled.div`
 
 const TrustSectionContentWrapper = styled.div`
   display: none;
+  margin-top: 3rem;
 
   @media (min-width: 768px) {
     display: block;
